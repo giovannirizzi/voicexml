@@ -38,13 +38,14 @@ class Session {
 			aai: null,
 			originator: this.remote // @todo
 		});
-
+	
 		this._loadDocument(uri)
 			.then(doc => this._process(doc))
 			.finally(() => model.popScope());
 	}
 
 	_process(doc) {
+		winston.debug("start processing");
 		model.pushScope(Scope.APPLICATION);
 		model.create('lastresult$', []);
 		model.create('lastresult$.confidence', null);
@@ -52,11 +53,13 @@ class Session {
 		model.create('lastresult$.inputmode', null);
 		model.create('lastresult$.interpretation', null);
 
-        var dialog = null; // @todo initialize this from uri fragment
-
+		console.dir(doc.children[0]);
+        var dialog = doc.children[0]; // @todo initialize this from uri fragment
+		
         while (doc) {
         	try {
-	        	model.pushScope(Scope.DOCUMENT);
+				
+				model.pushScope(Scope.DOCUMENT);
 	        	var doc = this._interpret(doc, dialog);
         	} finally {
         		model.popScope();
@@ -105,6 +108,7 @@ class Session {
 	}
 
 	_loadDocument(uri) {
+		winston.debug('loading document');
 		return this._fetcher.fetch(uri)
 			.then(content => this._parser.parse(content))
 	}

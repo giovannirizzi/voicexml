@@ -2,11 +2,12 @@
 
 class Node {
 	constructor(node, children) {
-		this._tagName = node.name();
-		this._attrs = node.attrs().reduce((acc, attr) => { 
-			acc[attr.name()] = attr.value(); 
-			return acc;
-		}, {});
+		this._tagName = new String(node['#name']);
+
+		this._attrs = {};
+		if(node.hasOwnProperty("attrs"))
+			this._attrs = node.attrs;
+
 		this._children = children;
 		this._node = node;
 	}
@@ -20,11 +21,11 @@ class Node {
 	}
 
 	get text() {
-		return this._node.text();
+		return this._node.text;
 	}
 
 	attr(name) {
-		return this._attrs[name];
+		return this._attrs.name;
 	}
 
 	is(type) {

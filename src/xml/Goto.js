@@ -10,12 +10,12 @@ class Goto extends Node {
 	constructor(node, children) {
 		super(node, children);
 
-		this._next = this.attr('next');
-		this._nextItem = this.attr('nextItem');
-		this._expr = this.attr('expr');
-		this._exprItem = this.attr('exprItem');
+		this._next = this._attrs.next;
+		this._nextItem = this._attrs._nextItem;
+		this._expr = this._attrs._expr;
+		this._exprItem = this._attrs._exprItem;
 	}
-
+		
 	get next() {
 		return this._next;
 	}
@@ -33,6 +33,7 @@ class Goto extends Node {
 	}
 
 	execute() {
+		winston.debug("EXECUTE GOTO: " +this._next + this._exprItem);
 		if ([this.next, this.nextItem, this.expr, this.exprItem].filter(v => v).length > 1) {
 			throw new Events.Errors.BadFetchError(`one of 'next', 'nextItem', 'expr' or 'exprItem' should be specified.`);
 		}
@@ -44,7 +45,8 @@ class Goto extends Node {
 			throw new Events.GotoNextFormItemEvent(nextItem);
 		}
 
-		if (next.startsWith('#')) {
+		if (next !== undefined && next.startsWith('#')) {
+			document.debug("goto: "+next.substring(1));
 			throw new Events.GotoNextFormEvent(next.substring(1));
 		} else {
 			throw new Events.GotoNextDocumentEvent(next);

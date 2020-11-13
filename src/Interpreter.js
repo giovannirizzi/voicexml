@@ -12,6 +12,7 @@ class Interpreter {
 		this._nextDialog = startDialog
 			? this.getDialog(startDialog)
 			: this.dialogs[0];
+		this._nextDialog = doc.children[0];
 	}
 
 	process(dialog) {
