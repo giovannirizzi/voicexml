@@ -4,8 +4,8 @@ const winston = require('winston');
 
 const model = require('./model');
 const promptPlayer = require('./promptPlayer');
-const Nodes = require('./xml/');
-const Events = require('./event/');
+const Nodes = require('./elements');
+const Events = require('./events');
 
 const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
 

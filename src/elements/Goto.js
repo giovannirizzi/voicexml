@@ -4,7 +4,7 @@ const winston = require('winston');
 
 const Node = require('./Node');
 const model = require('../model');
-const Events = require('../event/');
+const Events = require('../events/');
 
 class Goto extends Node {
 	constructor(node, children) {

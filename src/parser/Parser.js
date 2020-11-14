@@ -1,7 +1,7 @@
 'use strict';
 
 const parseString = require('xml2js').parseString;
-const nodeBuilder  = require('./xml/nodeBuilder');
+const nodeBuilder  = require('./nodeBuilder');
 const winston = require('winston');
 const { debug } = require('winston');
 
@@ -11,9 +11,6 @@ class Parser {
 	}
 
 	async parse(content){
-
-		//var parser = new xml2js.Parser();
-		//content = "<root name='swag'>Hello xml2js!<form></form><form></form></root>";
 
 		var result;
 

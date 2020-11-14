@@ -19,7 +19,9 @@ class Script extends Node {
 
 	execute() {
 		if (this.src) {
-			new Fetcher().fetch(this.src).then(data => this._evaluate(data));
+			new Fetcher().fetch(this.src)
+			.then(data => this._evaluate(data))
+			.catch(error => {});
 		} else {
 			this._evaluate();
 		}
