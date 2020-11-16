@@ -54,7 +54,7 @@ class Session {
 		model.create('lastresult$.interpretation', null);
 
 		console.dir(doc.children[0]);
-        var dialog = doc.children[0]; // @todo initialize this from uri fragment
+        var dialog = null; // @todo initialize this from uri fragment
 		
         while (doc) {
         	try {

@@ -2,7 +2,7 @@
 
 class Node {
 	constructor(node, children) {
-		this._tagName = new String(node['#name']);
+		this._tagName = node['#name'];
 
 		this._attrs = {};
 		if(node.hasOwnProperty("attrs"))
@@ -20,12 +20,8 @@ class Node {
 		return this._children;
 	}
 
-	get text() {
-		return this._node.text;
-	}
-
 	attr(name) {
-		return this._attrs.name;
+		return this._attrs[name];
 	}
 
 	is(type) {

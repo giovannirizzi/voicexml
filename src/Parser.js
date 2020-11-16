@@ -20,17 +20,25 @@ class Parser {
 		parseString(
 			content, 
 			{
-				attrkey : 'attr',
+				attrkey : 'attrs',
 				charkey : 'text',
 				childkey : 'children',
 				explicitCharkey : true,
 				explicitArray : true,
 				preserveChildrenOrder : true,
-				explicitChildren : true
+				explicitChildren : true,
+				normalizeTags : true,
+				normalize : true,
+				charsAsChildren : true,
+				trim : true
 			},
 			function(error, res){
 				result = res;
 			});
+
+		//console.log(JSON.stringify(result));
+
+		//return undefined;
 		var root = nodeBuilder(result.vxml);
 		return root;
 	}

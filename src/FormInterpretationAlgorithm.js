@@ -6,6 +6,7 @@ const model = require('./model');
 const promptPlayer = require('./promptPlayer');
 const Nodes = require('./xml/');
 const Events = require('./event/');
+const { ExceptionHandler } = require('winston');
 
 const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
 
@@ -35,7 +36,7 @@ class FormInterpretationAlgorithm {
 		do {
 			// winston.silly("Before main loop: %s", JSON.stringify(model));
 			this._item = this._select(gotoFormItemName);
-			winston.debug(`-- FIA: MainLoop - Selected: ${ JSON.stringify(this._item) }`);
+			winston.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
 			gotoFormItemName = null;
 
 			if (this._item != null) {
@@ -64,7 +65,7 @@ class FormInterpretationAlgorithm {
 	}
 
 	_select(name) {
-		winston.debug('-- FIA: Select');
+		winston.debug(`- FIA: Select ${name} `);
 
 		if (name) {
 			return this._formItemMap[name];
