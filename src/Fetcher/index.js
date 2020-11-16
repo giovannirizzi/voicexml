@@ -2,6 +2,4 @@
 
 const Fetcher = require('./Fetcher');
 
-module.exports = {
-	Fetcher: Fetcher
-};
+module.exports = new Fetcher();

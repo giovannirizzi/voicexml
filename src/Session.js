@@ -3,8 +3,8 @@
 const uuid = require('uuid');
 const winston = require('winston');
 const model = require('./model');
+const fetcher = require('./fetcher');
 const Parser = require('./parser/Parser');
-const Fetcher = require('./Fetcher/Fetcher');
 const Interpreter = require('./Interpreter');
 const Scope = require('./Scope');
 const Events = require('./events');
@@ -13,7 +13,6 @@ class Session {
 	constructor() {
 		this._uuid = uuid.v1();
 		this._parser = new Parser();
-		this._fetcher = new Fetcher();
 	}
 
 	call(uri) {
@@ -108,7 +107,7 @@ class Session {
 
 	_loadDocument(uri) {
 		winston.debug('loading document');
-		return this._fetcher.fetch(uri)
+		return fetcher.fetch(uri)
 			.then(content => this._parser.parse(content))
 			.catch(error => {});
 	}

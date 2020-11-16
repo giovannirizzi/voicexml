@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version = "2.1" >
+
+	<block>ciaooo sdao    asodo</block>
   <form>
     <block name="hello">
     	Hello!
@@ -33,7 +35,7 @@
 
 	<block>
 		Goodbye
-		<goto exprItem="'fin' + 'ish'" />
+		<!-- <goto exprItem="'fin' + 'ish'" /> -->
 	</block>
   </form>
 </vxml>

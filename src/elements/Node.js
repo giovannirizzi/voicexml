@@ -1,15 +1,10 @@
 'use strict';
 
 class Node {
-	constructor(node, children) {
-		this._tagName = node['#name'];
-
-		this._attrs = {};
-		if(node.hasOwnProperty("attrs"))
-			this._attrs = node.attrs;
-
+	constructor(tagName, attrs, children) {
+		this._tagName = tagName;
+		this._attrs = attrs;
 		this._children = children;
-		this._node = node;
 	}
 
 	get tagName() {
