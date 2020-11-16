@@ -4,7 +4,7 @@ const winston = require('winston');
 
 const Node = require('./Node');
 const model = require('../model');
-const Fetcher = require('../Fetcher');
+const Fetcher = require('../Fetcher/Fetcher');
 
 class Script extends Node {
 	constructor(node, children) {

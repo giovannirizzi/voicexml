@@ -5,5 +5,5 @@ module.exports = {
 	GotoNextFormItemEvent: require('./GotoNextFormItemEvent'),
 	GotoNextDocumentEvent: require('./GotoNextDocumentEvent'),
 
-	Errors: require('./error')
+	Errors: require('./errors')
 }
