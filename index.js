@@ -1,7 +1,7 @@
 'use strict';
 
 const winston = require('winston');
-winston.cli();
+
 winston.level = process.env['LEVEL'] || 'debug';
 
 /* Start the web server to serve vxml files */

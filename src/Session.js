@@ -53,10 +53,6 @@ class Session {
 		model.create('lastresult$.inputmode', null);
 		model.create('lastresult$.interpretation', null);
 
-<<<<<<< HEAD
-		console.dir(doc.children[0]);
-=======
->>>>>>> a620fb735a80c8028407d8a264d8c58913d311d2
         var dialog = null; // @todo initialize this from uri fragment
 		
         while (doc) {
