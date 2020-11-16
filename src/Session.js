@@ -3,11 +3,11 @@
 const uuid = require('uuid');
 const winston = require('winston');
 const model = require('./model');
-const Parser = require('./Parser');
-const Fetcher = require('./Fetcher');
+const Parser = require('./parser/Parser');
+const Fetcher = require('./Fetcher/Fetcher');
 const Interpreter = require('./Interpreter');
 const Scope = require('./Scope');
-const Events = require('./event/');
+const Events = require('./events');
 
 class Session {
 	constructor() {
@@ -53,7 +53,10 @@ class Session {
 		model.create('lastresult$.inputmode', null);
 		model.create('lastresult$.interpretation', null);
 
+<<<<<<< HEAD
 		console.dir(doc.children[0]);
+=======
+>>>>>>> a620fb735a80c8028407d8a264d8c58913d311d2
         var dialog = null; // @todo initialize this from uri fragment
 		
         while (doc) {
@@ -111,6 +114,7 @@ class Session {
 		winston.debug('loading document');
 		return this._fetcher.fetch(uri)
 			.then(content => this._parser.parse(content))
+			.catch(error => {});
 	}
 }
 

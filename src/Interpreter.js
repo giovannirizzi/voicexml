@@ -3,7 +3,7 @@
 const winston = require('winston');
 
 const FormInterpretationAlgorithm = require('./FormInterpretationAlgorithm');
-const Nodes = require('./xml/');
+const Nodes = require('./elements');
 
 class Interpreter {
 	constructor (session, doc, startDialog) {

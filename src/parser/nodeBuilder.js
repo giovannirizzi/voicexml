@@ -1,6 +1,6 @@
 'use strict';
 
-const Nodes = require('.');
+const Nodes = require('../elements');
 
 const NODES = {
 	// VoiceNodes Tags

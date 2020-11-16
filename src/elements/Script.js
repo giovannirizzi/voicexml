@@ -4,7 +4,7 @@ const winston = require('winston');
 
 const Node = require('./Node');
 const model = require('../model');
-const Fetcher = require('../Fetcher');
+const Fetcher = require('../Fetcher/Fetcher');
 
 class Script extends Node {
 	constructor(node, children) {
@@ -19,7 +19,9 @@ class Script extends Node {
 
 	execute() {
 		if (this.src) {
-			new Fetcher().fetch(this.src).then(data => this._evaluate(data));
+			new Fetcher().fetch(this.src)
+			.then(data => this._evaluate(data))
+			.catch(error => {});
 		} else {
 			this._evaluate();
 		}
