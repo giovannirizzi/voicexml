@@ -3,8 +3,8 @@
 const Node = require('./Node');
 
 class Vxml extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._version = this.attr('version');
 		this._base = this.attr('base');

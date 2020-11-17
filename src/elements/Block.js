@@ -6,8 +6,8 @@ const model = require('../model');
 const Scope = require('../Scope');
 
 class Block extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._name = this.attr('name') || `_name_${uuid.v1().replace(/-/g, '_')}`;
 		this._expr = this.attr('expr');

@@ -7,8 +7,8 @@ const model = require('../model');
 const fetcher = require('../fetcher/');
 
 class Script extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._src = this.attr('src');
 	}

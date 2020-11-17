@@ -1,19 +1,14 @@
 'use strict';
 
-const parseString = require('xml2js').parseString;
+const xml2js = require('xml2js');
 const nodeBuilder  = require('./nodeBuilder');
 
 class Parser {
-	constructor() {
+	constructor() {}
 
-	}
+	parse(data){
 
-	async parse(content){
-
-		var result;
-
-		parseString(
-			content, 
+		var parser = new xml2js.Parser(
 			{
 				attrkey : 'attrs',
 				charkey : 'text',
@@ -26,13 +21,19 @@ class Parser {
 				normalize : true,
 				charsAsChildren : true,
 				trim : true
-			},
-			function(error, res){
-				result = res;
-			});
-	
-		//var root = nodeBuilder(result.vxml);
-		return result;
+			}
+		);
+
+		return parser.parseStringPromise(data)
+			.then(result => nodeBuilder(result.vxml))
+			.catch(err => {
+				
+				//TODO custom error
+				return Promise.reject(
+					new Error(err.message)
+					);
+				}
+			);
 	}
 }
 

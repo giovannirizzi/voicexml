@@ -75,17 +75,26 @@ const NODES = {
 }
 
 module.exports = function nodeBuilder(node) {
-	const className = NODES[node['#name']];
+
+	const tagName = node['#name'];
+	const className = NODES[tagName];
 
 	if (!className) {
 		// @todo convert to some typed error
 		throw new Error(`unknown voicexml node '${ node['#name'] }'`);
 	}
+	else if(className === Nodes.Text){
 
-	var children = [];
-	if(node.hasOwnProperty("children"))
-		children = node.children.map(nodeBuilder);
+		return new Nodes.Text(tagName, {}, [], node.text);
+	}
+	else{
 
-	return new className(node, children);
+		//recursive call nodeBuilder on children
+		var children = node.hasOwnProperty("children") ? node.children.map(nodeBuilder) : {};
+
+		var attrs = node.hasOwnProperty("attrs") ? node.attrs : {};
+
+		return new className(tagName, attrs, children);
+	}
 }
 

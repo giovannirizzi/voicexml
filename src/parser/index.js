@@ -15,5 +15,6 @@ const parser = new Parser();
 
 fetcher.fetch('http://localhost:9000/index.vxml')
     .then(data => parser.parse(data))
-    .then(data => console.dir(JSON.stringify(data)));
+    .then(data => console.dir(data._children[1]._children[1]._children[1]))
+    .catch(err => console.log(err));
 

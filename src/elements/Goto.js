@@ -7,8 +7,8 @@ const model = require('../model');
 const Events = require('../events/');
 
 class Goto extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._next = this._attrs.next;
 		this._nextItem = this._attrs._nextItem;

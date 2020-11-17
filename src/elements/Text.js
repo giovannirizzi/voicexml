@@ -4,9 +4,9 @@ const Node = require('./Node');
 const promptPlayer = require('../promptPlayer');
 
 class Text extends Node {
-	constructor(node, children) {
-		super(node, children);
-		this.text = node['text'];
+	constructor(tagName, attrs, children, text) {
+		super(tagName, attrs, children);
+		this.text = text;
 	}
 
 	execute(player = promptPlayer) {

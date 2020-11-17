@@ -7,8 +7,8 @@ const model = require('../model');
 const promptPlayer = require('../promptPlayer');
 
 class Value extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._expr = this.attr('expr');
 	}

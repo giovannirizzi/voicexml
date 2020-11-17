@@ -7,8 +7,8 @@ const model = require('../model');
 const promptPlayer = require('../promptPlayer');
 
 class Prompt extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._bargeIn = this.attr('bargeIn');
 		this._bargeInType = this.attr('bargeInType');

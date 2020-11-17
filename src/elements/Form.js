@@ -4,8 +4,8 @@ const uuid = require('uuid');
 const Node = require('./Node');
 
 class Form extends Node {
-	constructor(node, children) {
-		super(node, children);
+	constructor(tagName, attrs, children) {
+		super(tagName, attrs, children);
 
 		this._id = this.attr('id') || `_id_${uuid.v1().replace(/-/g, '_')}`;
 		this._scope = this.attr('scope');
