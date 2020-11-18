@@ -35,10 +35,11 @@ class FormInterpretationAlgorithm {
 		do {
 			// winston.silly("Before main loop: %s", JSON.stringify(model));
 			this._item = this._select(gotoFormItemName);
-			winston.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
+			
 			gotoFormItemName = null;
 
 			if (this._item != null) {
+				winston.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
 				this._activeDialogChanged = this._item.name != lastFormItemName;
 				lastFormItemName = this._item.name;
 
@@ -64,7 +65,6 @@ class FormInterpretationAlgorithm {
 	}
 
 	_select(name) {
-		winston.debug(`- FIA: Select ${name} `);
 
 		if (name) {
 			return this._formItemMap[name];

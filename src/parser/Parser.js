@@ -2,6 +2,7 @@
 
 const xml2js = require('xml2js');
 const nodeBuilder  = require('./nodeBuilder');
+const Document = require('../elements/Document');
 
 class Parser {
 	constructor() {}

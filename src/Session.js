@@ -4,7 +4,7 @@ const uuid = require('uuid');
 const winston = require('winston');
 const model = require('./model');
 const fetcher = require('./fetcher');
-const Parser = require('./parser/Parser');
+const parser = require('./parser');
 const Interpreter = require('./Interpreter');
 const Scope = require('./Scope');
 const Events = require('./events');
@@ -12,7 +12,6 @@ const Events = require('./events');
 class Session {
 	constructor() {
 		this._uuid = uuid.v1();
-		this._parser = new Parser();
 	}
 
 	call(uri) {
@@ -58,18 +57,20 @@ class Session {
         	try {
 				
 				model.pushScope(Scope.DOCUMENT);
-	        	var doc = this._interpret(doc, dialog);
+				var doc = this._interpret(doc, dialog);
+
         	} finally {
         		model.popScope();
         	}
 
         }
 
-        model.popScope();
+		model.popScope();
+		winston.debug("end processing");
 	}
 
 	_interpret(doc, startDialog) {
-		winston.debug('Interpreting %s', doc);
+		winston.debug('Interpreting document');
 
 		const interpreter = new Interpreter(this, doc, startDialog);
 
@@ -91,24 +92,26 @@ class Session {
 	                if (!dialog) {
 	                    throw new Events.Errors.BadFetchError(`Target of goto '${id}'not found in current document`);
 	                }
-            // } catch (GotoNextDocumentEvent e) {
-            //     final URI uri = e.getUri();
-            //     return new DocumentDescriptor(uri);
-            // } catch (SubmitEvent e) {
-            //     return e.getDocumentDescriptor();
+					// } catch (GotoNextDocumentEvent e) {
+					//     final URI uri = e.getUri();
+					//     return new DocumentDescriptor(uri);
+					// } catch (SubmitEvent e) {
+					//     return e.getDocumentDescriptor();
 	            } else {
 		            throw e;
 	            }
             } finally {
                 model.popScope();
             }
-        }
+		}
+		
+		winston.debug("end interpreting document");
 	}
 
 	_loadDocument(uri) {
 		winston.debug('loading document');
 		return fetcher.fetch(uri)
-			.then(content => this._parser.parse(content))
+			.then(content => parser.parse(content))
 			.catch(error => {});
 	}
 }

@@ -12,7 +12,6 @@ class Interpreter {
 		this._nextDialog = startDialog
 			? this.getDialog(startDialog)
 			: this.dialogs[0];
-		this._nextDialog = doc.children[0];
 	}
 
 	process(dialog) {
@@ -21,7 +20,7 @@ class Interpreter {
 		// run FIA
 		const fia = new FormInterpretationAlgorithm(dialog);
 
-		winston.debug("Processing dialog: %s", JSON.stringify(dialog));
+		winston.debug("Processing dialog: %s", dialog.id);
 
 		fia.initialize();
 		fia.mainLoop();
@@ -42,7 +41,6 @@ class Interpreter {
 	}
 
 	getDialog(id) {
-		winston.debug(this.dialogs);
 		return this.dialogs.find(dialog => dialog.id === id);
 	}
 }

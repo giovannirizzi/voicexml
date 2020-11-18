@@ -46,7 +46,6 @@ class Goto extends Node {
 		}
 
 		if (next !== undefined && next.startsWith('#')) {
-			winston.debug("GotoNextFormEvent");
 			throw new Events.GotoNextFormEvent(next.substring(1));
 		} else {
 			throw new Events.GotoNextDocumentEvent(next);

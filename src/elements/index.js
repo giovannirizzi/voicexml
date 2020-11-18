@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = {
+
+	Document : require('./Document'),
+
 	Assign: require('./Assign'),
 	Block: require('./Block'),
 	// Catch: require('./Catch'),

@@ -18,7 +18,7 @@ class Value extends Node {
 	}
 
 	execute(player = promptPlayer) {
-		player(model.evaluate(this.expr));
+		player(` ${model.evaluate(this.expr)} `);
 	}
 }
 
