@@ -26,7 +26,7 @@ class Parser {
 		);
 
 		return parser.parseStringPromise(data)
-			.then(result => nodeBuilder(result.vxml))
+			.then(result => new Document(nodeBuilder(result.vxml)))
 			.catch(err => {
 				
 				//TODO custom error

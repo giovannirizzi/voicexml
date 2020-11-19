@@ -1,7 +1,7 @@
 'use strict';
 
 const uuid = require('uuid');
-const winston = require('winston');
+const logger = require('./logger');
 const model = require('./model');
 const fetcher = require('./fetcher');
 const parser = require('./parser');
@@ -43,7 +43,7 @@ class Session {
 	}
 
 	_process(doc) {
-		winston.debug("start processing");
+		logger.debug("start processing");
 		model.pushScope(Scope.APPLICATION);
 		model.create('lastresult$', []);
 		model.create('lastresult$.confidence', null);
@@ -51,13 +51,13 @@ class Session {
 		model.create('lastresult$.inputmode', null);
 		model.create('lastresult$.interpretation', null);
 
-        var dialog = null; // @todo initialize this from uri fragment
+        var dialogId = null; // @todo initialize this from uri fragment
 		
         while (doc) {
         	try {
 				
 				model.pushScope(Scope.DOCUMENT);
-				var doc = this._interpret(doc, dialog);
+				var doc = this._interpret(doc, dialogId);
 
         	} finally {
         		model.popScope();
@@ -66,13 +66,13 @@ class Session {
         }
 
 		model.popScope();
-		winston.debug("end processing");
+		logger.debug("end processing");
 	}
 
-	_interpret(doc, startDialog) {
-		winston.debug('Interpreting document');
+	_interpret(doc, startDialogId) {
+		logger.debug('Interpreting document');
 
-		const interpreter = new Interpreter(this, doc, startDialog);
+		const interpreter = new Interpreter(this, doc, startDialogId);
 
 		var dialog = interpreter.nextDialog;
 
@@ -85,9 +85,9 @@ class Session {
             	if (e instanceof Events.GotoNextFormEvent) {
 	            	var id = e.nextForm;
 
-            		winston.debug('Processing next form event, id = %s', id);
+            		logger.debug('Processing next form event, id = %s', id);
 
-	                dialog = interpreter.getDialog(id);
+	                dialog = doc.getDialogById(id);
 
 	                if (!dialog) {
 	                    throw new Events.Errors.BadFetchError(`Target of goto '${id}'not found in current document`);
@@ -105,11 +105,11 @@ class Session {
             }
 		}
 		
-		winston.debug("end interpreting document");
+		logger.debug("end interpreting document");
 	}
 
 	_loadDocument(uri) {
-		winston.debug('loading document');
+		logger.debug('loading document');
 		return fetcher.fetch(uri)
 			.then(content => parser.parse(content))
 			.catch(error => {});

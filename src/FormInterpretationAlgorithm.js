@@ -1,6 +1,6 @@
 'use strict';
 
-const winston = require('winston');
+const logger = require('./logger');
 
 const model = require('./model');
 const promptPlayer = require('./promptPlayer');
@@ -28,7 +28,7 @@ class FormInterpretationAlgorithm {
 	}
 
 	mainLoop() {
-		winston.debug(`-- FIA: MainLoop`);
+		logger.debug(`-- FIA: MainLoop`);
 		var lastFormItemName = null;
 		var gotoFormItemName = null;
 
@@ -39,7 +39,7 @@ class FormInterpretationAlgorithm {
 			gotoFormItemName = null;
 
 			if (this._item != null) {
-				winston.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
+				logger.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
 				this._activeDialogChanged = this._item.name != lastFormItemName;
 				lastFormItemName = this._item.name;
 
@@ -76,7 +76,7 @@ class FormInterpretationAlgorithm {
 	}
 
 	_collect(formItem) {
-		winston.debug('-- FIA: Collect');
+		logger.debug('-- FIA: Collect');
 		if (!formItem) {
 			return;
 		}
@@ -93,7 +93,7 @@ class FormInterpretationAlgorithm {
 	}
 
 	_process(formItem) {
-		winston.debug('-- FIA: Process');
+		logger.debug('-- FIA: Process');
 	}
 
 	_queuePrompts(formItem) {

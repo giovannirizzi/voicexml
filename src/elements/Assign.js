@@ -1,10 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-
 const Node = require('./Node');
 const model = require('../model');
-const promptPlayer = require('../promptPlayer');
 
 class Assign extends Node {
 	constructor(tagName, attrs, children) {

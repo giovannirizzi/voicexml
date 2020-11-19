@@ -1,8 +1,6 @@
 'use strict';
 
-const winston = require('winston');
-
-winston.level = process.env['LEVEL'] || 'debug';
+const logger = require('./src/logger');
 
 /* Start the web server to serve vxml files */
 var connect = require('connect')

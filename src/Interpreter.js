@@ -1,17 +1,16 @@
 'use strict';
 
-const winston = require('winston');
+const logger = require('./logger');
 
 const FormInterpretationAlgorithm = require('./FormInterpretationAlgorithm');
-const Nodes = require('./elements');
 
 class Interpreter {
-	constructor (session, doc, startDialog) {
+	constructor (session, doc, startDialogId) {
 		this._session = session;
 		this._doc = doc;
-		this._nextDialog = startDialog
-			? this.getDialog(startDialog)
-			: this.dialogs[0];
+		this._nextDialog = startDialogId
+			? doc.getDialogById(startDialogId)
+			: doc.dialogs[0];
 	}
 
 	process(dialog) {
@@ -20,7 +19,7 @@ class Interpreter {
 		// run FIA
 		const fia = new FormInterpretationAlgorithm(dialog);
 
-		winston.debug("Processing dialog: %s", dialog.id);
+		logger.debug("Processing dialog: %s", dialog.id);
 
 		fia.initialize();
 		fia.mainLoop();
@@ -28,20 +27,6 @@ class Interpreter {
 
 	get nextDialog() {
 		return this._nextDialog;
-	}
-
-	get dialogs() {
-		if (!this._dialogs) {
-			this._dialogs = this._doc
-				.children
-				.filter(node => node.oneOf(Nodes.Form, Nodes.Menu));
-		}
-
-		return this._dialogs;
-	}
-
-	getDialog(id) {
-		return this.dialogs.find(dialog => dialog.id === id);
 	}
 }
 

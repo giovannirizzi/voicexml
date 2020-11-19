@@ -1,7 +1,5 @@
 'use strict';
 
-const winston = require('winston');
-
 const Node = require('./Node');
 const model = require('../model');
 const promptPlayer = require('../promptPlayer');

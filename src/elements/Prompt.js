@@ -1,6 +1,6 @@
 'use strict';
 
-const winston = require('winston');
+const logger = require('../logger');
 
 const Node = require('./Node');
 const model = require('../model');
@@ -46,7 +46,7 @@ class Prompt extends Node {
 				return parts
 			}, []).join(''));
 		} else {
-			winston.debug("cond %s does not evaluates to a truthy value: skipping prompt", this.cond);
+			logger.debug("cond %s does not evaluates to a truthy value: skipping prompt", this.cond);
 		}
 	}
 }

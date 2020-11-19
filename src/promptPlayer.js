@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
+const logger = require('./logger');
 
 module.exports = function (prompt) {
-	winston.info(`${ prompt.trim() }`)
+	logger.info(`${ prompt.trim() }`)
 }
