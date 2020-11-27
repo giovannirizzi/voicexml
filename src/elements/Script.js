@@ -2,7 +2,7 @@
 
 const Node = require('./Node');
 const model = require('../model');
-const fetcher = require('../fetcher/');
+const fetcher = require('../docloader/fetcher/');
 
 class Script extends Node {
 	constructor(tagName, attrs, children) {

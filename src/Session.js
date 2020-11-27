@@ -3,8 +3,7 @@
 const uuid = require('uuid');
 const logger = require('./logger');
 const model = require('./model');
-const fetcher = require('./fetcher');
-const parser = require('./parser');
+const docloader = require('./docloader');
 const Interpreter = require('./Interpreter');
 const Scope = require('./Scope');
 const Events = require('./events');
@@ -36,8 +35,8 @@ class Session {
 			aai: null,
 			originator: this.remote // @todo
 		});
-	
-		this._loadDocument(uri)
+		
+		docloader.loadDocument(uri)
 			.then(doc => this._process(doc))
 			.finally(() => model.popScope());
 	}
@@ -106,13 +105,6 @@ class Session {
 		}
 		
 		logger.debug("end interpreting document");
-	}
-
-	_loadDocument(uri) {
-		logger.debug('loading document');
-		return fetcher.fetch(uri)
-			.then(content => parser.parse(content))
-			.catch(error => {});
 	}
 }
 
