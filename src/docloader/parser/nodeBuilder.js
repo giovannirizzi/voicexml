@@ -18,7 +18,7 @@ const NODES = {
 	// [Nodes.Exit.TAG_NAME]: Nodes.Exit,
 	// [Nodes.Field.TAG_NAME]: Nodes.Field,
 	// [Nodes.Filled.TAG_NAME]: Nodes.Filled,
-	[Nodes.Form.TAG_NAME]: Nodes.Form,
+	[Nodes.Form.TAG_NAME]: Nodes.Dialog,
 	// [Nodes.Foreach.TAG_NAME]: Nodes.Foreach,
 	[Nodes.Goto.TAG_NAME]: Nodes.Goto,
 	// [Nodes.Grammar.TAG_NAME]: Nodes.Grammar,
@@ -71,7 +71,7 @@ const NODES = {
 	// [Nodes.Tag.TAG_NAME]: Nodes.Tag,
 	// [Nodes.Token.TAG_NAME]: Nodes.Token,
 	// // Generic XML Tags
-	[Nodes.Text.TAG_NAME]: Nodes.Text,
+	[Nodes.Text.TAG_NAME]: Nodes.Text
 }
 
 module.exports = function nodeBuilder(node) {
