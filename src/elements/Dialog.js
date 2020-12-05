@@ -4,8 +4,7 @@ const uuid = require('uuid');
 const Node = require('./Node');
 const assert = require('assert').strict;
 const FormItem = require('./FormItem');
-
-const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
+const DialogState = require('../datatypes/DialogState');
 
 class Dialog extends Node {
 	constructor(tagName, attrs, children) {
@@ -18,7 +17,16 @@ class Dialog extends Node {
 
         this._formItemMap = {};
         this._formItems = this._children.filter(node => node instanceof FormItem);
-		this._formItems.forEach(formItem => this._formItemMap[formItem.name] = formItem);
+        this._formItems.forEach(formItem => this._formItemMap[formItem.name] = formItem);
+        
+        this._initialState = new DialogState();
+        //TODO settare le variabili hardcoddate dei formItems;
+    
+    }
+
+    get initialState(){
+
+        return this._initialState;
     }
 
     initialize(){
