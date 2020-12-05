@@ -71,5 +71,7 @@ module.exports = {
 	// Tag: require('./Tag'),
 	// Token: require('./Token'),
 	// // Generic XML Tags
-	Text: require('./Text')
+	Text: require('./Text'),
+	Dialog: require('./Dialog'),
+	FormItem: require('./FormItem')
 }

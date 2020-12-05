@@ -4,47 +4,12 @@ const uuid = require('uuid');
 const Element = require('./Element');
 const model = require('../model');
 const Scope = require('../Scope');
+const FormItem = require('./FormItem');
 
-class Block extends Element {
+class Block extends FormItem {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 
-		this._name = this.attr('name') || `_name_${uuid.v1().replace(/-/g, '_')}`;
-		this._expr = this.attr('expr');
-		this._cond = this.attr('cond');
-	}
-
-	// @todo move to FormItem mixin
-	get name() {
-		return this._name;
-	}
-
-	// @todo move to FormItem mixin
-	get expr() {
-		return this._expr;
-	}
-
-	// @todo move to FormItem mixin
-	get cond() {
-		return this._cond;
-	}
-
-	// @todo move to FormItem mixin
-	init() {
-		model.create(this.name, model.evaluate(this.expr));
-	}
-
-	// @todo move to FormItem mixin
-	setVisited() {
-		model.assign(this.name, true);
-	}
-
-	// @todo move to FormItem mixin
-	get selectable() {
-		var variable = model.evaluate(this.name);
-		var condition = model.evaluate(this.cond, true);
-
-		return !variable && condition;
 	}
 
 	execute() {
