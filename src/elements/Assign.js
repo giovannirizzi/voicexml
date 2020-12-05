@@ -1,9 +1,9 @@
 'use strict';
 
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 
-class Assign extends Node {
+class Assign extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

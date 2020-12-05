@@ -1,10 +1,10 @@
 'use strict';
 
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 const fetcher = require('../docloader/fetcher/');
 
-class Script extends Node {
+class Script extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

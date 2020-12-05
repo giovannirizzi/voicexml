@@ -1,9 +1,9 @@
 'use strict';
 
 const uuid = require('uuid');
-const Node = require('./Node');
+const Element = require('./Element');
 
-class Form extends Node {
+class Form extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

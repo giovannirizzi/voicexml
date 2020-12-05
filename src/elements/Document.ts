@@ -1,10 +1,16 @@
 'use strict';
 
-const Form = require('./Form');
+import Form from './Form';
+import Vxml from './Vxml';
+
 const Menu = undefined; //require('./Menu');
 
 class Document {
-	constructor(vxmlElement) {
+
+	private readonly _vxml : Vxml;
+	private _dialogs : Dialogs[];
+
+	constructor(vxmlElement : Vxml) {
     
 		this._vxml = vxmlElement;
 	}

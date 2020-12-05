@@ -1,11 +1,11 @@
 'use strict';
 
 const uuid = require('uuid');
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 const Scope = require('../Scope');
 
-class Block extends Node {
+class Block extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

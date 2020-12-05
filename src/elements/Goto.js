@@ -1,10 +1,10 @@
 'use strict';
 
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 const Events = require('../events/');
 
-class Goto extends Node {
+class Goto extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

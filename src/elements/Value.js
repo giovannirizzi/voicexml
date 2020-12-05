@@ -1,10 +1,10 @@
 'use strict';
 
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 const promptPlayer = require('../promptPlayer');
 
-class Value extends Node {
+class Value extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 

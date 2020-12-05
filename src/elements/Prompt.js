@@ -2,11 +2,11 @@
 
 const logger = require('../logger');
 
-const Node = require('./Node');
+const Element = require('./Element');
 const model = require('../model');
 const promptPlayer = require('../promptPlayer');
 
-class Prompt extends Node {
+class Prompt extends Element {
 	constructor(tagName, attrs, children) {
 		super(tagName, attrs, children);
 
