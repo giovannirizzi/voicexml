@@ -5,7 +5,11 @@
   "main": "index.js",
   "author": "Ufuk Kayserilioglu <ufuk@paralaus.com>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "node ./built/index.js",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
   "babel": {
     "presets": [
       [
@@ -26,9 +30,15 @@
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
+    "@types/connect": "^3.4.33",
+    "@types/node": "^14.14.10",
+    "@types/serve-static": "^1.13.8",
+    "@types/uuid": "^8.3.0",
+    "@types/xml2js": "^0.4.7",
     "babel-preset-env": "^1.4.0",
     "connect": "^3.7.0",
     "mocha": "^8.2.1",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "ts-node": "^9.1.0"
   }
 }

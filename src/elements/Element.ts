@@ -1,12 +1,11 @@
-'use strict';
 
 class Element {
 
 	private readonly _tagName : string;
 	private readonly _attrs : { [key: string]: string};
-	private readonly _children : Element[];
+	private readonly _children : Array<Element>;
 
-	constructor(tagName : string, attrs : {}, children : Element[]) {
+	constructor(tagName : string, attrs : {}, children : Array<Element>) {
 
 		this._tagName = tagName;
 		this._attrs = attrs;
@@ -14,10 +13,10 @@ class Element {
 	}
 
 	get tagName() : string {
-		return this.tagName;
+		return this._tagName;
 	}
 
-	get children() : Element[] {
+	get children() : Array<Element> {
 		return this._children;
 	}
 
@@ -35,5 +34,4 @@ class Element {
 
 }
 
-
-export = Element;
+export { Element };
