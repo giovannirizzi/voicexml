@@ -1,6 +1,6 @@
 
 import { Element } from '.';
-import uuid from 'uuid';
+import {v1 as uuid} from 'uuid';
 import {strict as assert} from 'assert';
 
 const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
@@ -17,7 +17,7 @@ class FormItem extends Element{
     
         assert.ok(FORM_ITEMS.indexOf(tagName) !== -1, "The element with tag "+tagName+", can't be a form item");
 
-        this._name = this.attr('name') || `_name_${uuid.v1().replace(/-/g, '_')}`;
+        this._name = this.attr('name') || `_name_${uuid().replace(/-/g, '_')}`;
         this._expr = this.attr('expr');
         this._cond = this.attr('cond');
 
@@ -36,6 +36,7 @@ class FormItem extends Element{
         this._variable = true;
     }
 
+    //guard condition
 	get selectable() {
 		//var variable = model.evaluate(this.name);
 		//var condition = model.evaluate(this.cond, true);

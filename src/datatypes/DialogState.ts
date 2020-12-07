@@ -3,6 +3,7 @@ class DialogState{
 
     private _lastFormItemId : number;
     private _formItemsVariableMap : { [key: string]: any} = {};
+    private _isInitialized : boolean = false;
 
     constructor(dialogState : DialogState | undefined = undefined){
 
@@ -16,6 +17,10 @@ class DialogState{
 
     set lastFormItemId(id){
         this.lastFormItemId = id;
+    }
+
+    get isInitialized(){
+        return this._isInitialized;
     }
 
     getVariableOfFormItemByName(name : string) : any{

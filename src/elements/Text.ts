@@ -1,8 +1,9 @@
 
 import { Element } from '.';
 import promptPlayer from '../promptPlayer';
+import {ISpeachable} from './interfaces';
 
-class Text extends Element {
+class Text extends Element implements ISpeachable{
 
 	private _text: string = "";
 
@@ -10,6 +11,10 @@ class Text extends Element {
 
 	constructor(tagName : string, attrs : {}, children : Array<Element>) {
 		super(tagName, attrs, children);
+	}
+
+	getSpeachableOutput(): string {
+		return this._text;
 	}
 
 	//to initialize only 

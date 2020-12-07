@@ -1,5 +1,5 @@
 
-import uuid from 'uuid';
+import {v1 as uuid} from 'uuid';
 import {strict as assert} from 'assert';
 import { Element, FormItem } from '.';
 import DialogState from '../datatypes/DialogState';
@@ -17,7 +17,7 @@ class Dialog extends Element {
         
         assert.ok(tagName === "form" || tagName === "menu", "The element with tag "+tagName+", can't be a form item");
         
-		this._id = this.attr('id') || `_id_${uuid.v1().replace(/-/g, '_')}`;
+		this._id = this.attr('id') || `_id_${uuid().replace(/-/g, '_')}`;
         this._scope = this.attr('scope');
 
         this._formItems = this.children.filter(node => node instanceof FormItem) as Array<FormItem>;
@@ -45,7 +45,7 @@ class Dialog extends Element {
         return this._formItems;
     }
 
-    getFormItemByName(name : string){
+    getFormItemByName(name : string) : FormItem | undefined{
         return this._formItemMap[name];
     }
 

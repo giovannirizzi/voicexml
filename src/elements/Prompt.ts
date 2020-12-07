@@ -2,8 +2,9 @@ import { Element, Text } from '.';
 import model from '../model';
 import promptPlayer from '../promptPlayer';
 import logger from '../logger';
+import { ISpeachable , isSpeachable} from './interfaces';
 
-class Prompt extends Element {
+class Prompt extends Element implements ISpeachable{
 
 	private readonly _bargeIn;
 	private readonly _bargeInType;
@@ -21,6 +22,29 @@ class Prompt extends Element {
 		this._cond = this.attr('cond');
 		this._count = this.attr('count');
 		this._timeout = this.attr('timeout');
+	}
+	
+	//TODO EVALUATE COND
+	getSpeachableOutput(): string {
+
+		var output : string = "";
+
+		//var cond = model.evaluate(this.cond, true);
+		var cond = true;
+
+		if (cond) {
+			this.children
+			.forEach((child : Element) => 
+				{
+					if(isSpeachable(child))
+						output += child.getSpeachableOutput();
+				});
+		} 
+		else {
+			logger.debug("cond %s does not evaluates to a truthy value: skipping prompt", this.cond);
+		}
+
+		return output;
 	}
 
 	get bargeIn() {
@@ -41,20 +65,6 @@ class Prompt extends Element {
 
 	get timeout() {
 		return this._timeout;
-	}
-
-	//TODO sistemare
-	execute() {
-		var cond = model.evaluate(this.cond, true);
-
-		if (cond) {
-			promptPlayer(this.children.reduce((parts, child) => {
-				(child as Text).execute((text : string) => parts.push(text as never));
-				return parts
-			}, []).join(''));
-		} else {
-			logger.debug("cond %s does not evaluates to a truthy value: skipping prompt", this.cond);
-		}
 	}
 }
 

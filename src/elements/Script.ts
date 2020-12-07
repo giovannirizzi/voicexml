@@ -36,5 +36,4 @@ class Script extends Element {
 	}
 }
 
-
 export{ Script };
