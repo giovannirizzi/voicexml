@@ -26,8 +26,7 @@ class Interpreter {
 
 		logger.debug("Processing dialog: %s", dialog.id);
 
-		fia.initialize();
-		fia.mainLoop();
+		fia.interpret(dialog);
 
 		logger.debug("End processing dialog: %s", dialog.id);
 	}

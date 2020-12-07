@@ -1,115 +1,134 @@
 
 import logger from './logger';
-import {Element, Dialog, Document, Form, FormItem, Prompt, Value, Var, Script} from './elements';
+import {Block, Dialog, Element, FormItem} from './elements';
 import * as Events from './events';
+import DialogState from './datatypes/DialogState';
+import {isExecutable, isSpeachable} from './elements/interfaces';
 
-const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
+class MyFormInterpretationAlgorithm {
 
-class FormInterpretationAlgorithm {
-
-	private _item : FormItem | null = null;
-	private _dialog : Dialog;
-	private _formItemMap : any = {};
-	private _formItems : any = [];
-	private _reprompt : boolean;
+	private readonly _dialog : Dialog;
+	private _dialogState : DialogState
 	private _activeDialogChanged : boolean;
+	private _reprompt : boolean;
+	private _speachableOutput : string = "";
 
-	constructor(dialog : Dialog) {
+	constructor(dialog : Dialog, state : DialogState = dialog.initialState/*Session sessionData, Directives directivesOut*/) {
+		
 		this._dialog = dialog;
-		this._formItemMap = {};
-		this._formItems = dialog.children.filter(node => node instanceof FormItem);
-		this._reprompt = false;
+		this._dialogState = state;
+
+
 		this._activeDialogChanged = true;
+		this._reprompt = false;
 	}
 
-	initialize() {
-		this._reprompt = false;
-		this._activeDialogChanged = true;
-
-		this._formItems.forEach((formItem : Element) => this._initializeFormItem(formItem));
-
-		this._dialog.children
-			.filter(child => child.oneOf(Var, Script))
-			.forEach((child : any) => child.execute());
+	_initialize(){
+		//esegui var e script
+		//reset internal promot counter to 1
 	}
 
-	mainLoop() {
-		logger.debug(`-- FIA: MainLoop`);
-		var lastFormItemName = null;
-		var gotoFormItemName : string | null = null;
+	/*
+	* The purpose of the select phase is to select the next form item to visit. This is done as follows
+	* @return the next formItem to visit
+	*/
+	_selectNextItem(nextItemName : (string | undefined) = undefined) : FormItem | undefined{
 
-		do {
-			
-			// winston.silly("Before main loop: %s", JSON.stringify(model));
-			this._item = this._select(gotoFormItemName);
-			
-			gotoFormItemName = null;
+		if (nextItemName) {
+			return this._dialog.getFormItemByName(nextItemName);
+		}
 
-			if (this._item) {
-				console.dir(this._item);
-				logger.debug(`-- FIA: MainLoop - Selected: ${ this._item.tagName }`);
-				this._activeDialogChanged = this._item.name != lastFormItemName;
-				lastFormItemName = this._item.name;
+		let nextFormItem = this._dialog.formItems
+			.find(item => 
+				item.selectable && 
+				this._dialogState.getVariableOfFormItemByName(item.name) === undefined);
+
+		logger.debug("Select phase: nextFormItem %s", nextFormItem?.name);
+
+		return nextFormItem;
+	}
+
+	interpret(dialog : Dialog, dialogState : DialogState = dialog.initialState){
+
+		if(!dialogState.initialized){
+			this._initialize();
+		}
+
+		let item : FormItem | undefined; 
+
+		let gotoFormItemName : string | undefined = undefined;
+
+		do{
+
+			item = this._selectNextItem(gotoFormItemName);
+
+			gotoFormItemName = undefined;
+			
+			if (item != null) {
 
 				try {
-					this._collect(this._item);
+					this._collect(item);
 
-					this._process(this._item);
+					this._process(item);
+
 				} catch (e) {
-					if (e instanceof Events.GotoNextFormItemEvent) {
+
+					if (e instanceof Events.GotoNextFormItemEvent) 
 						gotoFormItemName = e.itemName;
-					} else {
-						throw e;
-					}
+					else
+						throw e;	
 				}
 			}
-		
-		} while (this._item != null && this._item != undefined);
-
-	}
-
-	_initializeFormItem(formItem : any) {
-		formItem.init();
-		this._formItemMap[formItem.name] = formItem;
-	}
-
-	_select(name : string | null) : any {
-
-		if (name) {
-			return this._formItemMap[name];
 		}
+		while(item != null);
 
-		return Object.keys(this._formItems)
-			.map(name => this._formItems[name])
-			.find(item => item.selectable);
+
+		return undefined;
+
+		/*
+
+		return newDialogState
+
+		*/	
 	}
 
-	_collect(formItem : any) {
+	/*
+	* The purpose of the collect phase is to collect an input or an event.
+	* The selected form item is visited, which performs actions that depend on the type of form item
+	*/
+
+
+	_collect(selectedItem : FormItem){
+
 		logger.debug('-- FIA: Collect');
-		if (!formItem) {
-			return;
+		
+		this._dialogState.lastFormItemId = this._dialog.children.indexOf(selectedItem);
+		this._dialogState.setVariableOfFormItemByName(selectedItem.name, true);
+
+		let systemOut = "";
+
+		//TODO METTERE IL CODICE NELLA CLASSE BLOCK
+		if(selectedItem instanceof Block){
+
+			this._dialogState.setVariableOfFormItemByName(selectedItem.name, true);
+
+			selectedItem.children.forEach((child : Element) => {
+
+				if(isSpeachable(child))
+					systemOut += child.getSpeachableOutput();
+
+				if(isExecutable(child))
+					child.execute();
+
+			});
 		}
 
-		if (this._reprompt || !this._activeDialogChanged) {
-			this._queuePrompts(formItem);
-		}
-
-		this._reprompt = false;
-		this._activeDialogChanged = false;
-
-		// @todo: activate grammars
-		formItem.execute();
+	
 	}
 
-	_process(formItem : any) {
-		logger.debug('-- FIA: Process');
-	}
+	_process(selectedItem : FormItem){
 
-	_queuePrompts(formItem : any) {
-		formItem.children
-			.filter((child : Element)=> child.oneOf(Prompt, Audio, Text, Value))
-			.map((child : any) => child.execute());
 	}
 }
 
-export default FormInterpretationAlgorithm;
+export default MyFormInterpretationAlgorithm;
