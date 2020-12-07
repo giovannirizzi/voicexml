@@ -2,7 +2,7 @@
 
 import { Element } from '.';
 import model from '../model';
-import { fetcher } from '../docloader/fetcher/';
+import docloader from '../docloader';
 
 class Script extends Element {
 
@@ -22,7 +22,7 @@ class Script extends Element {
 
 	execute() {
 		if (this.src) {
-			fetcher.fetch(this.src)
+			docloader.fetcher.fetch(this.src)
 			.then((data : string) => this._evaluate(data))
 			.catch((error : any) => {});
 		} else {

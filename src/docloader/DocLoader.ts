@@ -1,6 +1,6 @@
 
-import {fetcher} from './fetcher/';
-import {parser} from './parser/';
+import fetcher from './fetcher';
+import parser from './parser';
 
 class DocLoader {
 	constructor() {}
@@ -17,6 +17,14 @@ class DocLoader {
 					);
 				}
             );	
+	}
+
+	get fetcher(){
+		return fetcher;
+	}
+
+	get parser(){
+		return parser;
 	}
 
 }

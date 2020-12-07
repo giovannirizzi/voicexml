@@ -1,5 +1,3 @@
-'use strict';
-
 import xml2js from 'xml2js';
 import elementBuilder from './elementBuilder';
 import {Document, Vxml} from '../../elements';
@@ -40,4 +38,4 @@ class Parser {
 	}
 }
 
-export { Parser };
+export default Parser;

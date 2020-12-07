@@ -32,7 +32,7 @@ class MyFormInterpretationAlgorithm {
 		nextItemName : (string | undefined) = undefined) : FormItem | undefined{
 
 		if (nextItemName) {
-			return dialog.getFormItemByName(name);
+			return dialog.getFormItemByName(nextItemName);
 		}
 
 		let nextFormItem = dialog.formItems

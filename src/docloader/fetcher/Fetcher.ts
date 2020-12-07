@@ -18,4 +18,4 @@ class Fetcher {
 	}
 }
 
-export = Fetcher;
+export default Fetcher;

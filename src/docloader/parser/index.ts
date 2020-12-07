@@ -1,8 +1,8 @@
 
 
-import {Parser} from './Parser';
+import Parser from './Parser';
 
-export const parser = new Parser();
+export default new Parser();
 
 //DEBUG PARSER
 /*

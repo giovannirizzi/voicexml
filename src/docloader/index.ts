@@ -1,4 +1,4 @@
 
 import DocLoader from './DocLoader';
 
-export = new DocLoader();
+export default new DocLoader();

@@ -1,4 +1,4 @@
 
 import Fetcher from './Fetcher';
 
-export const fetcher = new Fetcher();
+export default new Fetcher();
