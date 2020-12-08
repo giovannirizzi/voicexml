@@ -1,9 +1,9 @@
 import model from '../model';
 import { Element, FormItem } from '.';
 import Scope from '../Scope';
-import { ISpeachable, isSpeachable} from './interfaces';
+import { IExecutable, isExecutable, ExecutionResult} from './interfaces';
 
-class Block extends FormItem implements ISpeachable{
+class Block extends FormItem implements IExecutable{
 
 	public static readonly TAG_NAME : string = 'block';
 
@@ -11,36 +11,29 @@ class Block extends FormItem implements ISpeachable{
 		super(tagName, attrs, children);
 	}
 
-	//TODO EVALUATE COND
-	getSpeachableOutput(): string {
+	execute(): ExecutionResult {
 
-		var output : string = "";
+		let res = new ExecutionResult();
 
-		//var cond = model.evaluate(this.cond, true);
-		var cond = true;
-
-		if (cond) {
-			this.children
-			.forEach((child : Element) => 
-				{
-					if(isSpeachable(child))
-						output += child.getSpeachableOutput();
-				});
-		} 
-		
-		return output;
-	}
-
-	//TODO
-	execute() {
 		try {
-			this.setVisited();
-
 			model.pushScope(Scope.ANONYMOUS);
-			this.children.forEach((child : any) =>  child.execute());
+
+			//TODO: filter child with condition evaluated to false
+			this.children.forEach((child : Element) => {
+
+				let out : string = "";
+
+				if(isExecutable(child))
+					out = child.execute().speachableOutput;
+
+				res.appendSpeachableOutput(out);
+			});
+
 		} finally {
 			model.popScope();
 		}
+
+		return res;
 	}
 }
 

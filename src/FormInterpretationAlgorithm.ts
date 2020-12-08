@@ -3,24 +3,20 @@ import logger from './logger';
 import {Block, Dialog, Element, FormItem} from './elements';
 import * as Events from './events';
 import DialogState from './datatypes/DialogState';
-import {isExecutable, isSpeachable} from './elements/interfaces';
+import {isExecutable, ExecutionResult} from './elements/interfaces';
+import { assert } from 'console';
 
-class MyFormInterpretationAlgorithm {
+class FormInterpretationAlgorithm {
 
 	private readonly _dialog : Dialog;
 	private _dialogState : DialogState
-	private _activeDialogChanged : boolean;
-	private _reprompt : boolean;
-	private _speachableOutput : string = "";
+	private _executionResult : ExecutionResult;
 
 	constructor(dialog : Dialog, state : DialogState = dialog.initialState/*Session sessionData, Directives directivesOut*/) {
 		
 		this._dialog = dialog;
 		this._dialogState = state;
-
-
-		this._activeDialogChanged = true;
-		this._reprompt = false;
+		this._executionResult = new ExecutionResult();
 	}
 
 	_initialize(){
@@ -43,12 +39,14 @@ class MyFormInterpretationAlgorithm {
 				item.selectable && 
 				this._dialogState.getVariableOfFormItemByName(item.name) === undefined);
 
-		logger.debug("Select phase: nextFormItem %s", nextFormItem?.name);
+		logger.debug("Selected item: nextFormItem %s", nextFormItem?.name);
 
 		return nextFormItem;
 	}
 
 	interpret(dialog : Dialog, dialogState : DialogState = dialog.initialState){
+
+		logger.debug("Interpreting dialog id: %s", this._dialog.id);
 
 		if(!dialogState.initialized){
 			this._initialize();
@@ -96,39 +94,29 @@ class MyFormInterpretationAlgorithm {
 	* The purpose of the collect phase is to collect an input or an event.
 	* The selected form item is visited, which performs actions that depend on the type of form item
 	*/
-
-
 	_collect(selectedItem : FormItem){
 
-		logger.debug('-- FIA: Collect');
+		logger.debug('Collect phase on item name: %s', selectedItem.name);
 		
 		this._dialogState.lastFormItemId = this._dialog.children.indexOf(selectedItem);
-		this._dialogState.setVariableOfFormItemByName(selectedItem.name, true);
 
-		let systemOut = "";
+		let result : ExecutionResult;
 
-		//TODO METTERE IL CODICE NELLA CLASSE BLOCK
-		if(selectedItem instanceof Block){
+		if(isExecutable(selectedItem)){
 
 			this._dialogState.setVariableOfFormItemByName(selectedItem.name, true);
-
-			selectedItem.children.forEach((child : Element) => {
-
-				if(isSpeachable(child))
-					systemOut += child.getSpeachableOutput();
-
-				if(isExecutable(child))
-					child.execute();
-
-			});
+			result = selectedItem.execute();
+			this._executionResult.appendSpeachableOutput(result.speachableOutput);
 		}
-
-	
 	}
 
 	_process(selectedItem : FormItem){
 
 	}
+
+	get executionResult(){
+		return this._executionResult;
+	}
 }
 
-export default MyFormInterpretationAlgorithm;
+export default FormInterpretationAlgorithm;

@@ -29,6 +29,9 @@ class Interpreter {
 		fia.interpret(dialog);
 
 		logger.debug("End processing dialog: %s", dialog.id);
+
+		console.dir(fia.executionResult.speachableOutput);
+		logger.info("SpeachableOutput: %s", fia.executionResult.speachableOutput);
 	}
 
 	get nextDialog() {

@@ -1,5 +1,6 @@
-import model from '../model';
 import { Element } from '.';
+
+/*
 
 class Assign extends Element {
 
@@ -26,6 +27,8 @@ class Assign extends Element {
 	execute() {
 		model.assign(this.name, model.evaluate(this.expr));
 	}
-}
+}*/
+
+class Assign extends Element{};
 
 export { Assign };

@@ -1,9 +1,7 @@
-'use strict';
-
 import { Element } from './';
-import model from '../model';
+import { IExecutable, ExecutionResult } from './interfaces';
 
-class Var extends Element {
+class Var extends Element implements IExecutable{
 
 	private readonly _name;
 	private readonly _expr;
@@ -15,6 +13,10 @@ class Var extends Element {
 
 		this._name = this.attr('name');
 		this._expr = this.attr('expr');
+	
+	}
+	execute(): ExecutionResult {
+		return new ExecutionResult();
 	}
 
 	get name() {
@@ -25,9 +27,6 @@ class Var extends Element {
 		return this._expr;
 	}
 
-	execute() {
-		model.create(this.name, model.evaluate(this.expr));
-	}
 }
 
 export { Var };

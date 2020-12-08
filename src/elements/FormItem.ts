@@ -1,6 +1,6 @@
 
 import { Element } from '.';
-import {v1 as uuid} from 'uuid';
+import { nanoid } from 'nanoid'
 import {strict as assert} from 'assert';
 
 const FORM_ITEMS = ['block', 'initial', 'field', 'object', 'record', 'subdialog', 'transfer'];
@@ -17,7 +17,7 @@ class FormItem extends Element{
     
         assert.ok(FORM_ITEMS.indexOf(tagName) !== -1, "The element with tag "+tagName+", can't be a form item");
 
-        this._name = this.attr('name') || `_name_${uuid().replace(/-/g, '_')}`;
+        this._name = this.attr('name') || nanoid();
         this._expr = this.attr('expr');
         this._cond = this.attr('cond');
 

@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { nanoid } from 'nanoid'
 import logger from './logger';
 import model from './model';
 import docloader from './docloader';
@@ -9,10 +9,10 @@ import { Document, Dialog } from './elements';
 
 class Session {
 
-	private readonly _uuid;
+	private readonly _id;
 
 	constructor() {
-		this._uuid = uuid.v1();
+		this._id = nanoid();
 	}
 
 	call(uri : string) {

@@ -5,7 +5,7 @@ import * as Elements from '../../elements';
 
 const ELEMENTS = {
 	// VoiceNodes Tags
-	[Elements.Assign.TAG_NAME]: Elements.Assign,
+	//[Elements.Assign.TAG_NAME]: Elements.Assign,
 	[Elements.Block.TAG_NAME]: Elements.Block,
 	// [Nodes.Catch.TAG_NAME]: Nodes.Catch,
 	// [Nodes.Choice.TAG_NAME]: Nodes.Choice,
@@ -21,7 +21,7 @@ const ELEMENTS = {
 	// [Nodes.Filled.TAG_NAME]: Nodes.Filled,
 	[Elements.Form.TAG_NAME]: Elements.Dialog,
 	// [Nodes.Foreach.TAG_NAME]: Nodes.Foreach,
-	[Elements.Goto.TAG_NAME]: Elements.Goto,
+	//[Elements.Goto.TAG_NAME]: Elements.Goto,
 	// [Nodes.Grammar.TAG_NAME]: Nodes.Grammar,
 	// [Nodes.Help.TAG_NAME]: Nodes.Help,
 	// [Nodes.If.TAG_NAME]: Nodes.If,
@@ -41,7 +41,7 @@ const ELEMENTS = {
 	// [Nodes.Record.TAG_NAME]: Nodes.Record,
 	// [Nodes.Reprompt.TAG_NAME]: Nodes.Reprompt,
 	// [Nodes.Return.TAG_NAME]: Nodes.Return,
-	[Elements.Script.TAG_NAME]: Elements.Script,
+	//[Elements.Script.TAG_NAME]: Elements.Script,
 	// [Nodes.Subdialog.TAG_NAME]: Nodes.Subdialog,
 	// [Nodes.Submit.TAG_NAME]: Nodes.Submit,
 	// [Nodes.Throw.TAG_NAME]: Nodes.Throw,
@@ -80,7 +80,13 @@ function elementBuilder(node : any) : Elements.Element{
 	const tagName = node['#name'] as string;
 	const className = ELEMENTS[tagName];
 
-	if(className !== Elements.Text){
+	if(className === Elements.Text){
+
+		let t : Elements.Text = new Elements.Text(tagName, {}, []);
+		t.text = node.text;
+		return t;
+	}
+	else if(className != null){ //if its a valid element
 
 		//recursive call elementBuilder on children
 		var children = node.hasOwnProperty("children") ? node.children.map(elementBuilder) : {};
@@ -88,12 +94,6 @@ function elementBuilder(node : any) : Elements.Element{
 		var attrs = node.hasOwnProperty("attrs") ? node.attrs : {};
 		
 		return new className(tagName, attrs, children) as Elements.Element;
-	}
-	else if(className === Elements.Text){
-
-		let t : Elements.Text = new Elements.Text(tagName, {}, []);
-		t.text = node.text;
-		return t;
 	}
 	else{
 		return new Elements.Element("not_supported", {}, []);

@@ -1,10 +1,14 @@
-'use strict';
+
 
 import { Element } from '.';
 import model from '../model';
 import docloader from '../docloader';
+import { isExecutable } from './interfaces';
 
-class Script extends Element {
+/*
+
+
+class Script extends Element{
 
 	private readonly _src : string;
 
@@ -20,7 +24,8 @@ class Script extends Element {
 		return this._src;
 	}
 
-	execute() {
+	//TODO
+	execute() : ExecutionResult{
 		if (this.src) {
 			docloader.fetcher.fetch(this.src)
 			.then((data : string) => this._evaluate(data))
@@ -35,5 +40,7 @@ class Script extends Element {
 		model.evaluate(script);
 	}
 }
+*/
+class Script extends Element{};
 
 export{ Script };

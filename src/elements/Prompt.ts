@@ -1,10 +1,8 @@
-import { Element, Text } from '.';
-import model from '../model';
-import promptPlayer from '../promptPlayer';
+import { Element, Text } from '.';  
 import logger from '../logger';
-import { ISpeachable , isSpeachable} from './interfaces';
+import { IExecutable , isExecutable, ExecutionResult} from './interfaces';
 
-class Prompt extends Element implements ISpeachable{
+class Prompt extends Element implements IExecutable{
 
 	private readonly _bargeIn;
 	private readonly _bargeInType;
@@ -25,25 +23,18 @@ class Prompt extends Element implements ISpeachable{
 	}
 	
 	//TODO EVALUATE COND
-	getSpeachableOutput(): string {
+	execute(): ExecutionResult {
 
-		var output : string = "";
-
-		//var cond = model.evaluate(this.cond, true);
-		var cond = true;
-
-		if (cond) {
-			this.children
-			.forEach((child : Element) => 
-				{
-					if(isSpeachable(child))
-						output += child.getSpeachableOutput();
-				});
-		} 
-		else {
-			logger.debug("cond %s does not evaluates to a truthy value: skipping prompt", this.cond);
-		}
-
+		let output = new ExecutionResult();
+		this.children
+		.forEach((child : Element) => 
+			{
+				if(isExecutable(child)){
+					let out = child.execute().speachableOutput;
+					output.appendSpeachableOutput(out);
+				}
+					
+			});
 		return output;
 	}
 

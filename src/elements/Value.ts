@@ -1,9 +1,8 @@
 
 import { Element } from './';
-import model from '../model';
-import promptPlayer from '../promptPlayer';
+import { ExecutionResult, IExecutable } from './interfaces';
 
-class Value extends Element {
+class Value extends Element implements IExecutable{
 
 	private readonly _expr;
 
@@ -15,13 +14,15 @@ class Value extends Element {
 		this._expr = this.attr('expr');
 	}
 
+	//TODO
+	execute(): ExecutionResult {
+		return new ExecutionResult();
+	}
+
 	get expr() {
 		return this._expr;
 	}
 
-	execute(player = promptPlayer) {
-		player(` ${model.evaluate(this.expr)} `);
-	}
 }
 
 export {Value};

@@ -1,7 +1,5 @@
 
-import {Form, Dialog, Vxml} from './';
-
-const Menu = undefined; //require('./Menu');
+import {Dialog, Vxml} from './';
 
 class Document {
 

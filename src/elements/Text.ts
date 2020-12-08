@@ -1,9 +1,8 @@
 
 import { Element } from '.';
-import promptPlayer from '../promptPlayer';
-import {ISpeachable} from './interfaces';
+import {IExecutable, ExecutionResult} from './interfaces';
 
-class Text extends Element implements ISpeachable{
+class Text extends Element implements IExecutable{
 
 	private _text: string = "";
 
@@ -13,8 +12,10 @@ class Text extends Element implements ISpeachable{
 		super(tagName, attrs, children);
 	}
 
-	getSpeachableOutput(): string {
-		return this._text;
+	execute(): ExecutionResult {
+		let res = new ExecutionResult();
+		res.appendSpeachableOutput(this.text);
+		return res;
 	}
 
 	//to initialize only 
@@ -25,12 +26,6 @@ class Text extends Element implements ISpeachable{
 
 	get text(){
 		return this._text;
-	}
-
-	execute(player = promptPlayer) {
-		if (this.text) {
-			player(this.text);
-		}
 	}
 }
 

@@ -1,8 +1,9 @@
 'use strict';
 
 import { Element } from '.';
-import model from '../model';
 import * as Events from '../events/';
+
+/*
 
 class Goto extends Element {
 
@@ -57,6 +58,8 @@ class Goto extends Element {
 			throw new Events.GotoNextDocumentEvent(next);
 		}
 	}
-}
+}*/
+
+class Goto extends Element{};
 
 export {Goto};
