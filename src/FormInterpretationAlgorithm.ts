@@ -44,11 +44,11 @@ class FormInterpretationAlgorithm {
 		return nextFormItem;
 	}
 
-	interpret(dialog : Dialog, dialogState : DialogState = dialog.initialState){
+	interpret(){
 
 		logger.debug("Interpreting dialog id: %s", this._dialog.id);
 
-		if(!dialogState.initialized){
+		if(!this._dialogState.initialized){
 			this._initialize();
 		}
 

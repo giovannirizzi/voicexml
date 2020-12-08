@@ -2,10 +2,11 @@ import { nanoid } from 'nanoid'
 import logger from './logger';
 import model from './model';
 import docloader from './docloader';
-import Interpreter  from './Interpreter';
 import Scope from './Scope';
 import * as Events from './events';
 import { Document, Dialog } from './elements';
+import DocInterpreter from './DocInterpreter';
+import DocumentState from './datatypes/DocumentState';
 
 class Session {
 
@@ -75,9 +76,12 @@ class Session {
 	_interpret(doc : Document, startDialogId : string | null) : Document | null{
 		logger.debug('Interpreting document');
 
-		const interpreter = new Interpreter(this, doc, startDialogId);
+		//TODO
+		const interpreter = new DocInterpreter(doc, new DocumentState());
 
-		var dialog = interpreter.nextDialog;
+		interpreter.interpret();
+
+		/*var dialog = interpreter.nextDialog;
 
         while (dialog != null) {
             try {
@@ -106,7 +110,7 @@ class Session {
             } finally {
                 model.popScope();
             }
-		}
+		}*/
 
 		logger.debug("end interpreting document");
 

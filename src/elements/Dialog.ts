@@ -24,6 +24,7 @@ class Dialog extends Element {
         this._formItems.forEach(formItem => this._formItemMap[formItem.name] = formItem);
         
         this._initialState = new DialogState(undefined);
+        this._initialState.idDialog = this._id;
         //TODO settare le variabili hardcoddate dei formItems;
     }
 
