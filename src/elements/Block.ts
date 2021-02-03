@@ -23,10 +23,11 @@ class Block extends FormItem implements IExecutable{
 
 				let out : string = "";
 
-				if(isExecutable(child))
+				if(isExecutable(child)){
 					out = child.execute().speachableOutput;
+					res.appendSpeachableOutput(out);
+				}
 
-				res.appendSpeachableOutput(out);
 			});
 
 		} finally {

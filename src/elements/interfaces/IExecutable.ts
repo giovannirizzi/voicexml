@@ -9,7 +9,13 @@ class ExecutionResult {
     }
 
     appendSpeachableOutput(out : string){
-        this._speachableOutput += '\xa0'+out;
+        if(out.length > 0){
+
+            if(this._speachableOutput.length > 0)
+                this._speachableOutput += ' '
+
+            this._speachableOutput += out;
+        }
     }
 
     get speachableOutput(){

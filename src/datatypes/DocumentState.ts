@@ -5,10 +5,11 @@ class DocumentState{
     private _dialogState : DialogState | undefined;
     private _documentUri : string | undefined;
 
-    constructor(documentState : DocumentState | undefined = undefined){
+    constructor(documentUri : string | undefined = undefined,
+        documentState : DocumentState | undefined = undefined){
 
         this._dialogState = undefined;
-        this._documentUri = undefined;
+        this._documentUri = documentUri;
         Object.assign(this, documentState); 
     }
 

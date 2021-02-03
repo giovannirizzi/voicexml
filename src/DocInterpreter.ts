@@ -4,6 +4,10 @@ import { Dialog, Document} from "./elements";
 import FormInterpretationAlgorithm from "./FormInterpretationAlgorithm";
 import logger from "./logger";
 
+/**
+ * @classdesc Gestisce l'interpretazione del documento
+ */
+
 class DocInterpreter{
 
     private readonly _doc : Document;
@@ -37,12 +41,10 @@ class DocInterpreter{
             logger.debug("Processing dialog: %s", this._currDialog.id);
 
             fia.interpret();
-        
 
             logger.debug("End processing dialog: %s", this._currDialog.id);
 
             logger.info("SpeachableOutput: %s", fia.executionResult.speachableOutput);
-
 
             this._currDialog = undefined;
         }
