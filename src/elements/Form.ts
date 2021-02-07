@@ -8,8 +8,6 @@ class Form extends Dialog {
 
 	constructor(tagName : string, attrs : {}, children : Array<Element>) {
 		super(tagName, attrs, children);
-
-	
 	}
 
 }

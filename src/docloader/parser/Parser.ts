@@ -7,7 +7,7 @@ class Parser {
 
 	}
 
-	parse(data : string){
+	parse(data : string) : Promise<Document>{
 
 		var parser = new xml2js.Parser(
 			{

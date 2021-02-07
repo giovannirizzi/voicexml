@@ -5,6 +5,7 @@ import DocInterpreter from "./DocInterpreter";
 import docloader from "./docloader";
 import logger from "./logger";
 import {Document} from "./elements"
+import { ExecutionResult } from "./elements/interfaces";
 
 /**
  * @classdesc Gestisce l'interpretazione dell'applicazione
@@ -22,41 +23,56 @@ class AppInterpreter{
         this._currDocument = undefined;
     }
 
-    async interpret(){
+    private _loadCurrDocument(){
+        
+    }
 
-        logger.debug("AppInterpreter: BEGIN interpret()");
+    async interpret() : Promise<ExecutionResult>{
 
-        let docUri = this._sessionState.documentState?.documentUri;
-        if(docUri){
+        return new Promise<ExecutionResult>(async (resolve, reject) => {
 
-            try {
-                this._currDocument = await docloader.loadDocument(docUri);
-            }
-            catch(error){
-                logger.error(error);
-            }   
-        }
+            let res = new ExecutionResult();
 
-        var nextDocument : Document | null = null;
+            logger.debug("AppInterpreter: BEGIN interpret()");
 
-		do{
-			try {
-				
-                //model.pushScope(Scope.DOCUMENT);
-                if(this._currDocument && this._sessionState.documentState){
-
-                    const docInterpreter = new DocInterpreter(this._currDocument, this._sessionState.documentState);
-                    docInterpreter.interpret();
+            let docUri = this._sessionState.documentState?.documentUri;
+            if(docUri){
+    
+                try {
+                    this._currDocument = await docloader.loadDocument(docUri);
                 }
-                
-        	} finally {
-        		//model.popScope();
-        	}
+                catch(error){
+                    reject(error);
+                }   
+            }
+    
+            var nextDocument : Document | null = null;
+    
+            do{
+                try {
+                    
+                    //model.pushScope(Scope.DOCUMENT);
+                    if(this._currDocument && this._sessionState.documentState){
+    
+                        const docInterpreter = new DocInterpreter(this._currDocument, this._sessionState.documentState);
+                        docInterpreter.interpret();
+                        res = docInterpreter.executionResult;
+                      
+                    }
+                    
+                } finally {
+                    //model.popScope();
+                }
+    
+            }while(nextDocument);
 
-		}while(nextDocument);
+            logger.debug("AppInterpreter: END interpret()");
 
-		//model.popScope();
-		logger.debug("AppInterpreter: END interpret()");
+            //model.popScope();
+            
+            resolve(res);
+
+        });
     }
 }
 

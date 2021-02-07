@@ -1,6 +1,7 @@
 import AppInterpreter from "./AppInterpreter";
 import DocumentState from "./datatypes/DocumentState";
 import SessionState from "./datatypes/SessionState";
+import { ExecutionResult } from "./elements/interfaces";
 
 class VoiceBrowser{
 
@@ -12,10 +13,10 @@ class VoiceBrowser{
         return sessionState;
     }
 
-    static /* Response*/async processInput(sessionState : SessionState/*, Input input*/ ){
+    static processInput(sessionState : SessionState/*, Input input*/ ) : Promise<ExecutionResult>{
 
         let appInterpreter = new AppInterpreter(sessionState);
-        await appInterpreter.interpret();
+        return appInterpreter.interpret();
     }
 
 }

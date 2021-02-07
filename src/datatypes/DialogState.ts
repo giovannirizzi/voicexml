@@ -7,7 +7,7 @@ class DialogState{
 
     constructor(dialogState : DialogState | undefined = undefined){
 
-        this._lastFormItemId = -1;
+        this._lastFormItemId = undefined;
         this._idDialog = undefined;
         Object.assign(this, dialogState);   
     }

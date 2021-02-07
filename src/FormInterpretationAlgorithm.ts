@@ -4,7 +4,6 @@ import {Block, Dialog, Element, FormItem} from './elements';
 import * as Events from './events';
 import DialogState from './datatypes/DialogState';
 import {isExecutable, ExecutionResult} from './elements/interfaces';
-import { assert } from 'console';
 
 class FormInterpretationAlgorithm {
 
@@ -12,7 +11,12 @@ class FormInterpretationAlgorithm {
 	private _dialogState : DialogState
 	private _executionResult : ExecutionResult;
 
-	constructor(dialog : Dialog, state : DialogState = dialog.initialState/*Session sessionData, Directives directivesOut*/) {
+	/**
+	 * @readonly dialog
+	 * @param dialog 
+	 * @param state 
+	 */
+	constructor(readonly dialog : Dialog, state : DialogState /*Session sessionData, Directives directivesOut*/) {
 		
 		this._dialog = dialog;
 		this._dialogState = state;
@@ -20,6 +24,8 @@ class FormInterpretationAlgorithm {
 	}
 
 	_initialize(){
+
+		this._dialogState.idDialog = this._dialog.id;
 		//esegui var e script
 		//reset internal promot counter to 1
 	}
@@ -39,14 +45,14 @@ class FormInterpretationAlgorithm {
 				item.selectable && 
 				this._dialogState.getVariableOfFormItemByName(item.name) === undefined);
 
-		logger.debug("Selected item: nextFormItem %s", nextFormItem?.name);
+		logger.debug("FIA - Selected item: nextFormItem %s", nextFormItem?.name);
 
 		return nextFormItem;
 	}
 
 	interpret(){
 
-		logger.debug("Interpreting dialog id: %s", this._dialog.id);
+		logger.debug("FIA - Interpreting dialog id: %s", this._dialog.id);
 
 		if(!this._dialogState.initialized){
 			this._initialize();
@@ -79,15 +85,6 @@ class FormInterpretationAlgorithm {
 			}
 		}
 		while(item != null);
-
-
-		return undefined;
-
-		/*
-
-		return newDialogState
-
-		*/	
 	}
 
 	/*
@@ -96,7 +93,7 @@ class FormInterpretationAlgorithm {
 	*/
 	_collect(selectedItem : FormItem){
 
-		logger.debug('Collect phase on item name: %s', selectedItem.name);
+		logger.debug('FIA - Collect phase on item name: %s', selectedItem.name);
 		
 		this._dialogState.lastFormItemId = this._dialog.children.indexOf(selectedItem);
 
