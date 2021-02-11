@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >
+  <form id="ciao">
+    <block name="ciao1">
+        Ciao 1
+    </block>
+
+    <block name="ciao2">
+    	
+	    <prompt>
+          Ciao222
+	    </prompt>
+
+	    <goto nextItem="ciao4"/>
+
+    </block>
+
+    <block name="ciao3">
+	      Ciao 3
+    </block>
+
+    <block name="ciao4">
+	      Ciao 4
+    </block>
+
+  </form>
+
+</vxml>

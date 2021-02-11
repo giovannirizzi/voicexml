@@ -1,3 +1,5 @@
+import { Dialog } from "../elements";
+import logger from "../logger";
 import DialogState from "./DialogState";
 
 class DocumentState{
@@ -5,12 +7,13 @@ class DocumentState{
     private _dialogState : DialogState;
     private _documentUri : string | undefined;
 
-    constructor(documentUri : string,
-        documentState : DocumentState | undefined = undefined){
+    constructor(documentUri : string){
 
-        this._dialogState = new DialogState();
+        let idx = documentUri.indexOf("#");
+        let startDialogId = idx != -1 ? documentUri.substring(idx+1) : undefined;
+
+        this._dialogState = new DialogState(startDialogId);
         this._documentUri = documentUri;
-        Object.assign(this, documentState); 
     }
 
     get documentUri(){
@@ -19,6 +22,10 @@ class DocumentState{
 
     get dialogState(){
         return this._dialogState;
+    }
+
+    set dialogState(dialogState : DialogState){
+        this._dialogState = dialogState;
     }
 }
 

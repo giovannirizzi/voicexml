@@ -57,7 +57,6 @@ class AppInterpreter{
                         const docInterpreter = new DocInterpreter(this._currDocument, this._sessionState.documentState);
                         docInterpreter.interpret();
                         res = docInterpreter.executionResult;
-                      
                     }
                     
                 } finally {

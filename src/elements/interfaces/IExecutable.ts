@@ -3,6 +3,7 @@ import { Element } from '../Element';
 class ExecutionResult {
 
     private _speachableOutput : string;
+    private _nextFormItem : string | undefined;
 
     constructor(){
         this._speachableOutput = "";
@@ -21,13 +22,21 @@ class ExecutionResult {
     get speachableOutput(){
         return this._speachableOutput;
     }
+
+    set nextFormItem(nextFormItemName){
+        this._nextFormItem = nextFormItemName;
+    }
+
+    get nextFormItem(){
+        return this._nextFormItem;
+    }
 }
 
 export default ExecutionResult;
 
 interface IExecutable{
 
-    execute(/* Javascript Evaluator*/): ExecutionResult;
+    execute(executionResult : ExecutionResult/* Javascript Evaluator*/) : void;
 }
 
 function isExecutable(arg : Element | IExecutable): arg is IExecutable {

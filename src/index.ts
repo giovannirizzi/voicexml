@@ -15,7 +15,7 @@ async function debug(){
     app.use(serveStatic("./test"));
     let server = app.listen(9000);
 
-    const uri = process.argv[2] || 'http://localhost:9000/index.vxml';
+    const uri = process.argv[2] || 'http://localhost:9000/test1.vxml#ciao';
 
     let sessionState = VoiceBrowser.createNewSession(uri);
 
@@ -27,13 +27,13 @@ async function debug(){
         result = await VoiceBrowser.processInput(sessionState)
         logger.info(JSON.stringify(result));
 
-        result = await VoiceBrowser.processInput(sessionState)
+        /*result = await VoiceBrowser.processInput(sessionState)
         logger.info(JSON.stringify(result));
 
         result = await VoiceBrowser.processInput(sessionState)
         logger.info(JSON.stringify(result));
 
-        logger.info("SessionState: "+JSON.stringify(sessionState));
+        logger.info("SessionState: "+JSON.stringify(sessionState));*/
 
     }
     catch (e) {

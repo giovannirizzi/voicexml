@@ -4,14 +4,12 @@ import DocumentState from "./DocumentState";
 class SessionState{
 
     private readonly _id : string;
-    public _documentState : DocumentState | undefined;
+    public _documentState : DocumentState;
 
-    constructor(sessionState : SessionState | undefined = undefined, 
-        documentState : DocumentState | undefined = undefined){
+    constructor(documentState : DocumentState){
 
         this._documentState = documentState;
         this._id = nanoid();
-        Object.assign(this, sessionState); 
     }
 
     get id(){
@@ -20,6 +18,10 @@ class SessionState{
 
     get documentState(){
         return this._documentState;
+    }
+
+    set documentState(documentState : DocumentState){
+        this._documentState = documentState;
     }
 }
 

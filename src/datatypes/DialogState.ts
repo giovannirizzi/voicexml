@@ -5,11 +5,10 @@ class DialogState{
     private _lastFormItemId : number | undefined;
     private _formItemsVariableMap : { [key: string]: any} = {};
 
-    constructor(dialogState : DialogState | undefined = undefined){
+    constructor(idDialog : string | undefined = undefined){
 
         this._lastFormItemId = undefined;
-        this._idDialog = undefined;
-        Object.assign(this, dialogState);   
+        this._idDialog = idDialog;  
     }
 
     get lastFormItemId(){
@@ -31,8 +30,6 @@ class DialogState{
     set idDialog(id){
         this._idDialog = id;
     }
-
- 
 
     getVariableOfFormItemByName(name : string) : any{
         return this._formItemsVariableMap[name];

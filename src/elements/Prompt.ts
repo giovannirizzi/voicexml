@@ -23,19 +23,16 @@ class Prompt extends Element implements IExecutable{
 	}
 	
 	//TODO EVALUATE COND
-	execute(): ExecutionResult {
-
-		let output = new ExecutionResult();
+	execute(result : ExecutionResult){
+		logger.warn(JSON.stringify(this.children));
 		this.children
 		.forEach((child : Element) => 
 			{
 				if(isExecutable(child)){
-					let out = child.execute().speachableOutput;
-					output.appendSpeachableOutput(out);
+					child.execute(result);
 				}
 					
 			});
-		return output;
 	}
 
 	get bargeIn() {

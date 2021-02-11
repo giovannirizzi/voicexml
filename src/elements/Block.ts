@@ -1,7 +1,9 @@
-import model from '../model';
+//import model from '../model';
 import { Element, FormItem } from '.';
 import Scope from '../Scope';
+import * as Events from '../events';
 import { IExecutable, isExecutable, ExecutionResult} from './interfaces';
+import logger from '../logger';
 
 class Block extends FormItem implements IExecutable{
 
@@ -11,30 +13,21 @@ class Block extends FormItem implements IExecutable{
 		super(tagName, attrs, children);
 	}
 
-	execute(): ExecutionResult {
-
-		let res = new ExecutionResult();
+	execute(result : ExecutionResult){
 
 		try {
-			model.pushScope(Scope.ANONYMOUS);
+			//model.pushScope(Scope.ANONYMOUS);
 
 			//TODO: filter child with condition evaluated to false
 			this.children.forEach((child : Element) => {
 
-				let out : string = "";
-
-				if(isExecutable(child)){
-					out = child.execute().speachableOutput;
-					res.appendSpeachableOutput(out);
-				}
-
+				if(isExecutable(child))
+					child.execute(result);	
 			});
 
 		} finally {
-			model.popScope();
+			//model.popScope();
 		}
-
-		return res;
 	}
 }
 

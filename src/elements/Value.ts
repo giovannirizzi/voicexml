@@ -15,8 +15,7 @@ class Value extends Element implements IExecutable{
 	}
 
 	//TODO
-	execute(): ExecutionResult {
-		return new ExecutionResult();
+	execute(result : ExecutionResult) {
 	}
 
 	get expr() {

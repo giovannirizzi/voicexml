@@ -1,6 +1,6 @@
 
 import logger from './logger';
-import {Block, Dialog, Element, FormItem} from './elements';
+import {Block, Dialog, Element, FormItem, Goto} from './elements';
 import * as Events from './events';
 import DialogState from './datatypes/DialogState';
 import {isExecutable, ExecutionResult} from './elements/interfaces';
@@ -37,7 +37,10 @@ class FormInterpretationAlgorithm {
 	_selectNextItem(nextItemName : (string | undefined) = undefined) : FormItem | undefined{
 
 		if (nextItemName) {
-			return this._dialog.getFormItemByName(nextItemName);
+			let item = this._dialog.getFormItemByName(nextItemName);
+
+			if(item && !this._dialogState.getVariableOfFormItemByName(item.name))
+				return item;
 		}
 
 		let nextFormItem = this._dialog.formItems
@@ -58,16 +61,11 @@ class FormInterpretationAlgorithm {
 			this._initialize();
 		}
 
-		let item : FormItem | undefined; 
-
-		let gotoFormItemName : string | undefined = undefined;
+		let item : FormItem | undefined = this._selectNextItem(undefined); 
+		let gotoNextFormItemName : string | undefined = undefined;
 
 		do{
 
-			item = this._selectNextItem(gotoFormItemName);
-
-			gotoFormItemName = undefined;
-			
 			if (item != null) {
 
 				try {
@@ -75,12 +73,17 @@ class FormInterpretationAlgorithm {
 
 					this._process(item);
 
-				} catch (e) {
+					if(this._executionResult.nextFormItem){
 
-					if (e instanceof Events.GotoNextFormItemEvent) 
-						gotoFormItemName = e.itemName;
-					else
-						throw e;	
+						gotoNextFormItemName = this._executionResult.nextFormItem;
+						this._executionResult.nextFormItem = undefined;
+					}
+
+					item = this._selectNextItem(gotoNextFormItemName);
+
+				} catch (e) {
+			
+					logger.error(e);		
 				}
 			}
 		}
@@ -98,12 +101,11 @@ class FormInterpretationAlgorithm {
 		this._dialogState.lastFormItemId = this._dialog.children.indexOf(selectedItem);
 
 		let result : ExecutionResult;
-
+		
 		if(isExecutable(selectedItem)){
 
 			this._dialogState.setVariableOfFormItemByName(selectedItem.name, true);
-			result = selectedItem.execute();
-			this._executionResult.appendSpeachableOutput(result.speachableOutput);
+			selectedItem.execute(this._executionResult);
 		}
 	}
 
