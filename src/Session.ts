@@ -22,7 +22,7 @@ class Session {
 	}
 
 	_run(uri : string) {
-		model.pushScope(Scope.SESSION);
+		/*model.pushScope(Scope.SESSION);
 		model.create('connection', {
 			local: {
 				uri: 'local test'
@@ -37,84 +37,22 @@ class Session {
 			redirect: [],
 			aai: null,
 			//originator: this.remote // @todo
-		});
+		});*/
 		
-		docloader.loadDocument(uri)
-			.then(doc => this._process(doc))
-			.catch(error => logger.error(error))
-			.finally(() => model.popScope());
+		//docloader.loadDocument(uri)
+		//	.then(doc => this._process(doc))
+		//	.catch(error => logger.error(error))
+			//.finally(() => model.popScope());
 	}
 
 	_process(doc : Document) {
 		logger.debug("start processing");
-		model.pushScope(Scope.APPLICATION);
+		/*model.pushScope(Scope.APPLICATION);
 		model.create('lastresult$', []);
 		model.create('lastresult$.confidence', null);
 		model.create('lastresult$.utterance', null);
 		model.create('lastresult$.inputmode', null);
-		model.create('lastresult$.interpretation', null);
-
-        var dialogId : string | null = null; // @todo initialize this from uri fragment
-		var nextDocument : Document | null = doc;
-
-		do{
-			try {
-				
-				model.pushScope(Scope.DOCUMENT);
-				nextDocument = this._interpret(doc, dialogId);
-
-        	} finally {
-        		model.popScope();
-        	}
-
-		}while(nextDocument);
-
-		model.popScope();
-		logger.debug("end processing");
-	}
-
-	_interpret(doc : Document, startDialogId : string | null) : Document | null{
-		logger.debug('Interpreting document');
-
-		//TODO
-		const interpreter = new DocInterpreter(doc, new DocumentState());
-
-		interpreter.interpret();
-
-		/*var dialog = interpreter.nextDialog;
-
-        while (dialog != null) {
-            try {
-                model.pushScope(Scope.DIALOG);
-                interpreter.process(dialog);
-                dialog = interpreter.nextDialog;
-            } catch (e) {
-            	if (e instanceof Events.GotoNextFormEvent) {
-	            	var id = e.nextForm;
-
-            		logger.debug('Processing next form event, id = %s', id);
-
-	                dialog = doc.getDialogById(id);
-
-	                if (!dialog) {
-	                    throw new Events.Errors.BadFetchError(`Target of goto '${id}'not found in current document`);
-	                }
-					// } catch (GotoNextDocumentEvent e) {
-					//     final URI uri = e.getUri();
-					//     return new DocumentDescriptor(uri);
-					// } catch (SubmitEvent e) {
-					//     return e.getDocumentDescriptor();
-	            } else {
-		            throw e;
-	            }
-            } finally {
-                model.popScope();
-            }
-		}*/
-
-		logger.debug("end interpreting document");
-
-		return null;
+		model.create('lastresult$.interpretation', null);*/
 	}
 }
 

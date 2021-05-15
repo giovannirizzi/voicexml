@@ -6,7 +6,7 @@ import { FetchError } from '../../events/errors';
 class Fetcher {
 	constructor() {}
 
-	fetch(uri : string) {
+	fetch(uri : string){
 
 		return axios.get(uri)
 			.then(response => response.data)

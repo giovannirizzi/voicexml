@@ -1,9 +1,10 @@
 'use strict';
 
 import { Element } from '.';
-import * as Events from '../events/';
+import * as Events from '../events';
+import logger from '../logger';
+import { IExecutable , isExecutable, ExecutionResult} from './interfaces';
 
-/*
 
 class Goto extends Element {
 
@@ -39,27 +40,31 @@ class Goto extends Element {
 		return this._exprItem;
 	}
 
-	execute() {
+	execute() : ExecutionResult {
 	
-		if ([this.next, this.nextItem, this.expr, this.exprItem].filter(v => v).length > 1) {
+
+		var res = new ExecutionResult();
+		/*if ([this.next, this.nextItem, this.expr, this.exprItem].filter(v => v).length > 1) {
 			throw new Events.Errors.BadFetchError(`one of 'next', 'nextItem', 'expr' or 'exprItem' should be specified.`);
 		}
 
 		var nextItem = this.nextItem || model.evaluate(this.exprItem);
 		var next = this.next || model.evaluate(this.expr);
+		*/
 
-		if (nextItem) {
-			throw new Events.GotoNextFormItemEvent(nextItem);
+		if (this._nextItem) {
+			res.nextFormItem = this._nextItem;
 		}
 
+		/*
 		if (next !== undefined && next.startsWith('#')) {
 			throw new Events.GotoNextFormEvent(next.substring(1));
 		} else {
 			throw new Events.GotoNextDocumentEvent(next);
-		}
-	}
-}*/
+		}*/
 
-class Goto extends Element{};
+		return res;
+	}
+}
 
 export {Goto};

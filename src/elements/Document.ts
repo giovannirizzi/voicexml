@@ -6,13 +6,11 @@ class Document {
 
 	private readonly _vxml : Vxml;
 	private _dialogs : Array<Dialog>;
-	private _initialState : DocumentState;
 
 	constructor(vxmlElement : Vxml) {
     
 		this._vxml = vxmlElement;
-		
-		this._initialState = new DocumentState();
+
 
 		this._dialogs = this._vxml
 				.children
@@ -26,11 +24,6 @@ class Document {
 	getDialogById(id : string) : Dialog | undefined{
 		return this.dialogs.find(dialog => dialog.id === id);
 	}
-
-	get initialState(){
-		return this._initialState;
-	}
-
 }
 
 export { Document };

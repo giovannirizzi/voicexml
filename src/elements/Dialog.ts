@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import {strict as assert} from 'assert';
 import { Element, FormItem } from '.';
 import DialogState from '../datatypes/DialogState';
+import logger from '../logger';
 
 class Dialog extends Element {
 
@@ -10,7 +11,6 @@ class Dialog extends Element {
     private readonly _scope;
     private readonly _formItemMap : { [key: string]: FormItem} = {};
     private readonly _formItems : Array<FormItem>;
-    private readonly _initialState : DialogState;
 
 	constructor(tagName : string, attrs : {}, children : Array<Element>) {
         super(tagName, attrs, children);
@@ -23,14 +23,8 @@ class Dialog extends Element {
         this._formItems = this.children.filter(node => node instanceof FormItem) as Array<FormItem>;
         this._formItems.forEach(formItem => this._formItemMap[formItem.name] = formItem);
         
-        this._initialState = new DialogState(undefined);
-        this._initialState.idDialog = this._id;
+    
         //TODO settare le variabili hardcoddate dei formItems;
-    }
-
-    get initialState(){
-
-        return this._initialState;
     }
 
     get formItems(){

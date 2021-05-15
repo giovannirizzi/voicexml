@@ -12,10 +12,8 @@ class Text extends Element implements IExecutable{
 		super(tagName, attrs, children);
 	}
 
-	execute(): ExecutionResult {
-		let res = new ExecutionResult();
-		res.appendSpeachableOutput(this.text);
-		return res;
+	execute(result : ExecutionResult) {
+		result.appendSpeachableOutput(this.text);
 	}
 
 	//to initialize only 
