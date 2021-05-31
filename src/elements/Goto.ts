@@ -40,10 +40,8 @@ class Goto extends Element {
 		return this._exprItem;
 	}
 
-	execute() : ExecutionResult {
+	execute(result : ExecutionResult) {
 	
-
-		var res = new ExecutionResult();
 		/*if ([this.next, this.nextItem, this.expr, this.exprItem].filter(v => v).length > 1) {
 			throw new Events.Errors.BadFetchError(`one of 'next', 'nextItem', 'expr' or 'exprItem' should be specified.`);
 		}
@@ -53,7 +51,7 @@ class Goto extends Element {
 		*/
 
 		if (this._nextItem) {
-			res.nextFormItem = this._nextItem;
+			result.nextFormItem = this._nextItem;
 		}
 
 		/*
@@ -62,8 +60,6 @@ class Goto extends Element {
 		} else {
 			throw new Events.GotoNextDocumentEvent(next);
 		}*/
-
-		return res;
 	}
 }
 

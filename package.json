@@ -1,12 +1,18 @@
 {
-  "name": "voicexml",
-  "version": "0.0.1",
+  "name": "voicexml-interpreter",
+  "version": "0.1",
   "description": "VoiceXML Interpreter",
-  "main": "index.js",
-  "author": "Ufuk Kayserilioglu <ufuk@paralaus.com>",
+  "main": "./built/index.js",
+  "author": "Giovanni Rizzi <giovannirizzi98@live.com>",
+  "contributors": [
+    {
+      "name" : "Ufuk Kayserilioglu",
+      "email" : "ufuk@paralaus.com"
+    }
+  ],
   "license": "MIT",
   "scripts": {
-    "start": "node ./built/index.js",
+    "start": "node ./built/debug.js",
     "build": "tsc --build",
     "clean": "tsc --build --clean"
   },

@@ -24,7 +24,6 @@ class Prompt extends Element implements IExecutable{
 	
 	//TODO EVALUATE COND
 	execute(result : ExecutionResult){
-		logger.warn(JSON.stringify(this.children));
 		this.children
 		.forEach((child : Element) => 
 			{

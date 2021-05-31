@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version = "2.1" >
-  <form id="ciao">
-    <block name="ciao1">
-        Ciao 1
+  <form id="">
+    <block name="block1">
+      prompt1
     </block>
 
-    <block name="ciao2">
-    	
+    <block name="block2">
+
+    	<goto nextItem="block4"/>
+
 	    <prompt>
-          Ciao222
+        prompt2
 	    </prompt>
 
-	    <goto nextItem="ciao4"/>
-
     </block>
 
-    <block name="ciao3">
-	      Ciao 3
+    <block name="block3">
+	      prompt3
     </block>
 
-    <block name="ciao4">
-	      Ciao 4
+    <block name="block4">
+	      prompt4
     </block>
 
   </form>
